@@ -11,7 +11,7 @@ A modern, interactive algorithm visualizer built with React that helps you under
 - **Adjustable Speed**: Control animation speed from 100ms to 2000ms
 - **Professional UI**: Modern dark theme with smooth animations and hover effects
 
-## 📊 Algorithms
+## ⚙️ Algorithms
 
 ### Currently Available:
 - **Selection Sort** - O(N²) time complexity, O(1) space complexity
