@@ -1,4 +1,4 @@
-# Algorithm Visualizer
+# 📊 Algorithm Visualizer
 
 A modern, interactive algorithm visualizer built with React that helps you understand sorting algorithms through step-by-step visual demonstrations and code highlighting.
 
