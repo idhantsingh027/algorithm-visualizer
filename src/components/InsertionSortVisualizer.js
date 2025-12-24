@@ -1,52 +1,50 @@
 import React, { useState, useRef } from 'react';
 import './Visualizer.css';
 
-const selectionSortCode = {
+const insertionSortCode = {
   python: [
-    { line: 1, code: 'def selection_sort(arr):' },
-    { line: 2, code: '    n = len(arr)' },
-    { line: 3, code: '    for i in range(n - 1):' },
-    { line: 4, code: '        min_idx = i' },
-    { line: 5, code: '        for j in range(i + 1, n):' },
-    { line: 6, code: '            if arr[j] < arr[min_idx]:' },
-    { line: 7, code: '                min_idx = j' },
-    { line: 8, code: '        arr[i], arr[min_idx] = arr[min_idx], arr[i]' },
+    { line: 1, code: 'def insertion_sort(arr):' },
+    { line: 2, code: '    for i in range(1, len(arr)):' },
+    { line: 3, code: '        key = arr[i]' },
+    { line: 4, code: '        j = i - 1' },
+    { line: 5, code: '        while j >= 0 and arr[j] > key:' },
+    { line: 6, code: '            arr[j + 1] = arr[j]' },
+    { line: 7, code: '            j -= 1' },
+    { line: 8, code: '        arr[j + 1] = key' },
     { line: 9, code: '    return arr' }
   ],
   c: [
-    { line: 1, code: 'void selectionSort(int arr[], int n) {' },
-    { line: 2, code: '    int i, j, min_idx, temp;' },
-    { line: 3, code: '    for (i = 0; i < n - 1; i++) {' },
-    { line: 4, code: '        min_idx = i;' },
-    { line: 5, code: '        for (j = i + 1; j < n; j++) {' },
-    { line: 6, code: '            if (arr[j] < arr[min_idx]) {' },
-    { line: 7, code: '                min_idx = j;' },
-    { line: 8, code: '            }' },
+    { line: 1, code: 'void insertionSort(int arr[], int n) {' },
+    { line: 2, code: '    int i, key, j;' },
+    { line: 3, code: '    for (i = 1; i < n; i++) {' },
+    { line: 4, code: '        key = arr[i];' },
+    { line: 5, code: '        j = i - 1;' },
+    { line: 6, code: '        while (j >= 0 && arr[j] > key) {' },
+    { line: 7, code: '            arr[j + 1] = arr[j];' },
+    { line: 8, code: '            j = j - 1;' },
     { line: 9, code: '        }' },
-    { line: 10, code: '        temp = arr[min_idx];' },
-    { line: 11, code: '        arr[min_idx] = arr[i];' },
-    { line: 12, code: '        arr[i] = temp;' },
-    { line: 13, code: '    }' },
-    { line: 14, code: '}' }
+    { line: 10, code: '        arr[j + 1] = key;' },
+    { line: 11, code: '    }' },
+    { line: 12, code: '}' }
   ],
   cpp: [
-    { line: 1, code: 'void selectionSort(vector<int>& arr) {' },
+    { line: 1, code: 'void insertionSort(vector<int>& arr) {' },
     { line: 2, code: '    int n = arr.size();' },
-    { line: 3, code: '    for (int i = 0; i < n - 1; i++) {' },
-    { line: 4, code: '        int min_idx = i;' },
-    { line: 5, code: '        for (int j = i + 1; j < n; j++) {' },
-    { line: 6, code: '            if (arr[j] < arr[min_idx]) {' },
-    { line: 7, code: '                min_idx = j;' },
-    { line: 8, code: '            }' },
+    { line: 3, code: '    for (int i = 1; i < n; i++) {' },
+    { line: 4, code: '        int key = arr[i];' },
+    { line: 5, code: '        int j = i - 1;' },
+    { line: 6, code: '        while (j >= 0 && arr[j] > key) {' },
+    { line: 7, code: '            arr[j + 1] = arr[j];' },
+    { line: 8, code: '            j--;' },
     { line: 9, code: '        }' },
-    { line: 10, code: '        swap(arr[min_idx], arr[i]);' },
+    { line: 10, code: '        arr[j + 1] = key;' },
     { line: 11, code: '    }' },
     { line: 12, code: '}' }
   ]
 };
 
-function SelectionSortVisualizer() {
-  const [array, setArray] = useState([64, 25, 12, 22, 11, 90, 45, 34]);
+function InsertionSortVisualizer() {
+  const [array, setArray] = useState([12, 11, 13, 5, 6, 7]);
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const isPausedRef = useRef(false);
@@ -56,12 +54,11 @@ function SelectionSortVisualizer() {
   const speedRef = useRef(1000);
   const [language, setLanguage] = useState('python');
   const [highlightedIndices, setHighlightedIndices] = useState({
-    current: null,
-    minIndex: null,
+    key: null,
     comparing: null,
     sorted: []
   });
-  const [inputValue, setInputValue] = useState('64, 25, 12, 22, 11, 90, 45, 34');
+  const [inputValue, setInputValue] = useState('12, 11, 13, 5, 6, 7');
   const [inputError, setInputError] = useState('');
 
   const handleArrayInput = () => {
@@ -93,8 +90,7 @@ function SelectionSortVisualizer() {
     pausedResolve.current = null;
     setCurrentLine(null);
     setHighlightedIndices({
-      current: null,
-      minIndex: null,
+      key: null,
       comparing: null,
       sorted: []
     });
@@ -123,17 +119,16 @@ function SelectionSortVisualizer() {
     }
   };
 
-  const selectionSort = async () => {
+  const insertionSort = async () => {
     setIsRunning(true);
     const arr = [...array];
     const n = arr.length;
-    const sorted = [];
 
     // Line mappings for different languages
     const lines = {
-      python: { def: 1, outerLoop: 3, setMin: 4, innerLoop: 5, compare: 6, updateMin: 7, swap: 8, end: 9 },
-      c: { def: 1, decl: 2, outerLoop: 3, setMin: 4, innerLoop: 5, compare: 6, updateMin: 7, swap1: 10, swap2: 11, swap3: 12, end: 14 },
-      cpp: { def: 1, n: 2, outerLoop: 3, setMin: 4, innerLoop: 5, compare: 6, updateMin: 7, swap: 10, end: 12 }
+      python: { def: 1, forLoop: 2, key: 3, j: 4, while: 5, shift: 6, decrement: 7, place: 8, end: 9 },
+      c: { def: 1, decl: 2, forLoop: 3, key: 4, j: 5, while: 6, shift: 7, decrement: 8, place: 10, end: 12 },
+      cpp: { def: 1, n: 2, forLoop: 3, key: 4, j: 5, while: 6, shift: 7, decrement: 8, place: 10, end: 12 }
     };
     const l = lines[language];
 
@@ -148,57 +143,45 @@ function SelectionSortVisualizer() {
       await sleep(speed);
     }
 
-    for (let i = 0; i < n - 1; i++) {
-      setCurrentLine(l.outerLoop);
-      setHighlightedIndices(prev => ({ ...prev, current: i }));
+    for (let i = 1; i < n; i++) {
+      setCurrentLine(l.forLoop);
       await sleep(speed);
 
-      let minIdx = i;
-      setCurrentLine(l.setMin);
-      setHighlightedIndices(prev => ({ ...prev, minIndex: i }));
+      const key = arr[i];
+      setCurrentLine(l.key);
+      // eslint-disable-next-line no-loop-func
+      setHighlightedIndices({ key: i, comparing: null, sorted: Array.from({ length: i }, (_, idx) => idx) });
       await sleep(speed);
 
-      for (let j = i + 1; j < n; j++) {
-        setCurrentLine(l.innerLoop);
+      let j = i - 1;
+      setCurrentLine(l.j);
+      await sleep(speed);
+
+      while (j >= 0 && arr[j] > key) {
+        setCurrentLine(l.while);
         // eslint-disable-next-line no-loop-func
-        setHighlightedIndices(prev => ({ ...prev, comparing: j }));
+        setHighlightedIndices({ key: j + 1, comparing: j, sorted: Array.from({ length: i }, (_, idx) => idx) });
         await sleep(speed);
 
-        setCurrentLine(l.compare);
-        await sleep(speed);
-
-        if (arr[j] < arr[minIdx]) {
-          setCurrentLine(l.updateMin);
-          minIdx = j;
-          // eslint-disable-next-line no-loop-func
-          setHighlightedIndices(prev => ({ ...prev, minIndex: minIdx, comparing: j }));
-          await sleep(speed);
-        }
-      }
-
-      if (language === 'c') {
-        setCurrentLine(l.swap1);
-        await sleep(speed);
-        setCurrentLine(l.swap2);
-        await sleep(speed);
-        setCurrentLine(l.swap3);
-        [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+        setCurrentLine(l.shift);
+        arr[j + 1] = arr[j];
         setArray([...arr]);
         await sleep(speed);
-      } else {
-        setCurrentLine(l.swap);
-        [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
-        setArray([...arr]);
+
+        setCurrentLine(l.decrement);
+        j--;
         await sleep(speed);
       }
-      sorted.push(i);
-      setHighlightedIndices(prev => ({ ...prev, sorted: [...sorted], comparing: null }));
+
+      setCurrentLine(l.place);
+      arr[j + 1] = key;
+      setArray([...arr]);
+      await sleep(speed);
     }
 
     setCurrentLine(l.end);
     setHighlightedIndices({
-      current: null,
-      minIndex: null,
+      key: null,
       comparing: null,
       sorted: Array.from({ length: n }, (_, i) => i)
     });
@@ -209,9 +192,8 @@ function SelectionSortVisualizer() {
   };
 
   const getBarColor = (index) => {
-    if (highlightedIndices.sorted.includes(index)) return '#4ade80';
-    if (highlightedIndices.current === index) return '#f59e0b';
-    if (highlightedIndices.minIndex === index) return '#ef4444';
+    if (highlightedIndices.sorted.includes(index) && highlightedIndices.key !== index) return '#4ade80';
+    if (highlightedIndices.key === index) return '#f59e0b';
     if (highlightedIndices.comparing === index) return '#3b82f6';
     return '#6b7280';
   };
@@ -219,8 +201,8 @@ function SelectionSortVisualizer() {
   return (
     <div className="visualizer">
       <div className="visualizer-header">
-        <h1 className="visualizer-title">SELECTION SORT</h1>
-        <p className="algorithm-description">Finds minimum element from unsorted portion and moves it to sorted position.</p>
+        <h1 className="visualizer-title">INSERTION SORT</h1>
+        <p className="algorithm-description">Builds sorted array one element at a time by inserting each element into its correct position.</p>
         <div className="complexity-info">
           <span className="complexity-badge">Time: O(N²)</span>
           <span className="complexity-badge">Space: O(1)</span>
@@ -252,7 +234,7 @@ function SelectionSortVisualizer() {
             </div>
           </div>
           <div className="code-display">
-            {selectionSortCode[language].map((lineObj) => (
+            {insertionSortCode[language].map((lineObj) => (
               <div 
                 key={lineObj.line}
                 className={`code-line ${currentLine === lineObj.line ? 'highlighted' : ''}`}
@@ -287,11 +269,7 @@ function SelectionSortVisualizer() {
           <div className="legend">
             <div className="legend-item">
               <span className="legend-color" style={{ backgroundColor: '#f59e0b' }}></span>
-              <span>Current Position</span>
-            </div>
-            <div className="legend-item">
-              <span className="legend-color" style={{ backgroundColor: '#ef4444' }}></span>
-              <span>Minimum</span>
+              <span>Key Element</span>
             </div>
             <div className="legend-item">
               <span className="legend-color" style={{ backgroundColor: '#3b82f6' }}></span>
@@ -314,7 +292,7 @@ function SelectionSortVisualizer() {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     disabled={isRunning}
-                    placeholder="e.g., 64, 25, 12, 22, 11"
+                    placeholder="e.g., 12, 11, 13, 5, 6"
                   />
                   <button 
                     className="control-btn apply-btn"
@@ -330,7 +308,7 @@ function SelectionSortVisualizer() {
               <div className="controls-row">
                 <button 
                   className="control-btn primary"
-                  onClick={selectionSort}
+                  onClick={insertionSort}
                   disabled={isRunning}
                 >
                   {isRunning ? '⏸ Running...' : '▶ Start'}
@@ -370,4 +348,4 @@ function SelectionSortVisualizer() {
   );
 }
 
-export default SelectionSortVisualizer;
+export default InsertionSortVisualizer;

@@ -14,14 +14,11 @@ A modern, interactive algorithm visualizer built with React that helps you under
 ## ⚙️ Algorithms
 
 ### Currently Available:
-- **Selection Sort** - O(N²) time complexity, O(1) space complexity
-
-### Coming Soon:
-- Bubble Sort
-- Insertion Sort
-- Merge Sort
-- Quick Sort
-- And more!
+- **Selection Sort** - O(N²) time, O(1) space - Finds minimum element and moves it to sorted position
+- **Bubble Sort** - O(N²) time, O(1) space - Repeatedly swaps adjacent elements if they're in wrong order
+- **Insertion Sort** - O(N²) time, O(1) space - Builds sorted array one element at a time
+- **Merge Sort** - O(N log N) time, O(N) space - Divide and conquer sorting with merging
+- **Quick Sort** - O(N log N) time, O(log N) space - Partitions array around pivot element
 
 ## 🛠️ Installation
 
@@ -66,7 +63,11 @@ algorithm-visualizer/
 │   ├── components/
 │   │   ├── Header.js/css
 │   │   ├── AlgorithmCard.js/css
-│   │   └── SelectionSortVisualizer.js/css
+│   │   ├── SelectionSortVisualizer.js/css
+│   │   ├── BubbleSortVisualizer.js
+│   │   ├── InsertionSortVisualizer.js
+│   │   ├── MergeSortVisualizer.js
+│   │   └── QuickSortVisualizer.js
 │   ├── App.js/css
 │   ├── index.js/css
 │   └── ...
@@ -76,12 +77,14 @@ algorithm-visualizer/
 
 ## 🎯 Features Breakdown
 
-### Selection Sort Visualizer
+### All Visualizers Include:
 - Real-time array visualization with dynamic bar heights
 - Step-by-step code execution highlighting
-- Color-coded element states
-- Input validation
-- Smooth animations with configurable speed
+- Color-coded element states (comparing, swapping, sorted)
+- Multi-language support (Python, C, C++)
+- Input validation for custom arrays
+- Smooth animations with configurable speed (100-2000ms)
+- Algorithm complexity information
 
 ## 🤝 Contributing
 

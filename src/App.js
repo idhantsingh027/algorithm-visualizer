@@ -3,6 +3,11 @@ import './App.css';
 import Header from './components/Header';
 import AlgorithmCard from './components/AlgorithmCard';
 import SelectionSortVisualizer from './components/SelectionSortVisualizer';
+import BubbleSortVisualizer from './components/BubbleSortVisualizer';
+import InsertionSortVisualizer from './components/InsertionSortVisualizer';
+import MergeSortVisualizer from './components/MergeSortVisualizer';
+import QuickSortVisualizer from './components/QuickSortVisualizer';
+import HeapSortVisualizer from './components/HeapSortVisualizer';
 
 function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
@@ -19,9 +24,36 @@ function App() {
       id: 'bubble-sort',
       name: 'BUBBLE SORT',
       code: '00000010',
-      status: 'COMING SOON',
       complexity: 'O(N²)',
       languages: ['PYTHON', 'C', 'C++', 'O(N²)']
+    },
+    {
+      id: 'insertion-sort',
+      name: 'INSERTION SORT',
+      code: '00000011',
+      complexity: 'O(N²)',
+      languages: ['PYTHON', 'C', 'C++', 'O(N²)']
+    },
+    {
+      id: 'merge-sort',
+      name: 'MERGE SORT',
+      code: '00000100',
+      complexity: 'O(N log N)',
+      languages: ['PYTHON', 'C', 'C++', 'O(N log N)']
+    },
+    {
+      id: 'quick-sort',
+      name: 'QUICK SORT',
+      code: '00000101',
+      complexity: 'O(N log N)',
+      languages: ['PYTHON', 'C', 'C++', 'O(N log N)']
+    },
+    {
+      id: 'heap-sort',
+      name: 'HEAP SORT',
+      code: '00000110',
+      complexity: 'O(N log N)',
+      languages: ['PYTHON', 'C', 'C++', 'O(N log N)']
     }
   ];
 
@@ -38,11 +70,7 @@ function App() {
               <AlgorithmCard 
                 key={algo.id}
                 algorithm={algo}
-                onClick={() => {
-                  if (algo.status !== 'COMING SOON') {
-                    setSelectedAlgorithm(algo.id);
-                  }
-                }}
+                onClick={() => setSelectedAlgorithm(algo.id)}
               />
             ))}
           </div>
@@ -56,6 +84,11 @@ function App() {
             ← Back to Algorithms
           </button>
           {selectedAlgorithm === 'selection-sort' && <SelectionSortVisualizer />}
+          {selectedAlgorithm === 'bubble-sort' && <BubbleSortVisualizer />}
+          {selectedAlgorithm === 'insertion-sort' && <InsertionSortVisualizer />}
+          {selectedAlgorithm === 'merge-sort' && <MergeSortVisualizer />}
+          {selectedAlgorithm === 'quick-sort' && <QuickSortVisualizer />}
+          {selectedAlgorithm === 'heap-sort' && <HeapSortVisualizer />}
         </div>
       )}
     </div>

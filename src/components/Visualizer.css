@@ -55,6 +55,7 @@
   overflow: hidden;
   position: sticky;
   top: 100px;
+  min-width: 520px;
 }
 
 .code-header {
@@ -98,6 +99,7 @@
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.9rem;
   line-height: 1.8;
+  overflow-x: auto;
 }
 
 .code-line {
@@ -465,9 +467,9 @@
 .slider::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  border-radius: 50%;
+      border-radius: 50%;
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  cursor: pointer;
+    cursor: pointer;
   border: 2px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
@@ -481,6 +483,318 @@
 
 .slider::-moz-range-thumb:active {
   transform: scale(1.1);
+}
+
+/* Tree Visualization Styles */
+.tree-visualization {
+  margin-bottom: 30px;
+  padding: 40px 30px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  overflow-x: auto;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Heap tree: use explicit layout + SVG connectors (more precise than nth-child connector rules) */
+.heap-tree .tree-container {
+  width: min(900px, 100%);
+  min-width: 680px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+.heap-tree .tree-level {
+  display: none;
+}
+
+.heap-tree .tree-node-wrapper::before,
+.heap-tree .node-connector {
+  display: none !important;
+}
+
+.heap-tree .heap-connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.heap-tree .heap-connector-line {
+  stroke: rgba(255, 255, 255, 0.28);
+  stroke-width: 2;
+}
+
+.heap-tree .heap-node {
+  position: absolute;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.heap-tree .tree-node {
+  min-width: 64px;
+  padding: 10px 16px;
+}
+
+.heap-tree .tree-node.idle {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.heap-tree .tree-node.comparing {
+  border-color: #3b82f6;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(59, 130, 246, 0.06) 100%);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Merge tree: match heap-tree feel (explicit layout + SVG connectors), without changing other tree visualizations */
+.merge-tree .tree-container {
+  width: min(980px, 100%);
+  min-width: 760px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+.merge-tree .tree-level {
+  display: none;
+}
+
+.merge-tree .tree-node-wrapper::before,
+.merge-tree .node-connector {
+  display: none !important;
+}
+
+.merge-tree .merge-connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.merge-tree .merge-connector-line {
+  stroke: rgba(255, 255, 255, 0.28);
+  stroke-width: 2;
+}
+
+.merge-tree .merge-node {
+  position: absolute;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.merge-tree .tree-node {
+  min-width: 86px;
+  max-width: 320px;
+  padding: 10px 14px;
+}
+
+.merge-tree .node-value {
+  font-size: 0.85rem;
+}
+
+.merge-tree-subtitle {
+  text-align: center;
+  margin-top: -28px;
+  margin-bottom: 36px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.02em;
+}
+
+.tree-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 40px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.tree-container {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  min-width: 600px;
+  padding: 20px 0;
+}
+
+.tree-level {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  flex-wrap: nowrap;
+  position: relative;
+}
+
+.tree-node-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tree-node {
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 2px solid;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 80px;
+  position: relative;
+  z-index: 2;
+  background: rgba(26, 26, 26, 0.9);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.tree-node:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+
+.tree-node.dividing {
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%);
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.tree-node.merging {
+  border-color: #3b82f6;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.08) 100%);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: pulse-smooth 1.2s ease-in-out infinite;
+}
+
+.tree-node.merged {
+  border-color: #4ade80;
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.2) 0%, rgba(74, 222, 128, 0.05) 100%);
+  box-shadow: 0 4px 16px rgba(74, 222, 128, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Connector lines with gradient */
+.node-connector {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  width: 3px;
+  height: 60px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.4) 100%);
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+/* Add branches from parent to children */
+.tree-node-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.15));
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+/* First child - line goes to the right */
+.tree-node-wrapper:nth-child(odd)::before {
+  left: 50%;
+  width: calc(100% + 20px);
+  transform: translateX(0);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.15));
+}
+
+/* Second child - line goes to the left */
+.tree-node-wrapper:nth-child(even)::before {
+  right: 50%;
+  left: auto;
+  width: calc(100% + 20px);
+  transform: translateX(0);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.4));
+}
+
+/* Hide horizontal connector for single nodes and first level */
+.tree-level:first-child .tree-node-wrapper::before,
+.tree-level:first-child .node-connector {
+  display: none;
+}
+
+.node-values {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.node-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse-smooth {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 28px rgba(59, 130, 246, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Result Array Styles */
+.result-array-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.01) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+}
+
+.result-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.result-array-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.result-item {
+  padding: 10px 16px;
+  background: rgba(59, 130, 246, 0.15);
+  border: 2px solid rgba(59, 130, 246, 0.4);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  min-width: 45px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+  transition: all 0.3s ease;
+}
+
+.result-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 @media (max-width: 1200px) {
