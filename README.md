@@ -19,6 +19,7 @@ A modern, interactive algorithm visualizer built with React that helps you under
 - **Insertion Sort** - O(N²) time, O(1) space - Builds sorted array one element at a time
 - **Merge Sort** - O(N log N) time, O(N) space - Divide and conquer sorting with merging
 - **Quick Sort** - O(N log N) time, O(log N) space - Partitions array around pivot element
+- **Heap Sort** - O(N log N) time, O(1) space - Builds a max-heap and extracts elements to sort
 
 ## 🛠️ Installation
 
@@ -63,11 +64,13 @@ algorithm-visualizer/
 │   ├── components/
 │   │   ├── Header.js/css
 │   │   ├── AlgorithmCard.js/css
-│   │   ├── SelectionSortVisualizer.js/css
+│   │   ├── SelectionSortVisualizer.js
 │   │   ├── BubbleSortVisualizer.js
 │   │   ├── InsertionSortVisualizer.js
 │   │   ├── MergeSortVisualizer.js
-│   │   └── QuickSortVisualizer.js
+│   │   ├── QuickSortVisualizer.js
+│   │   ├── HeapSortVisualizer.js
+│   │   └── Visualizer.css
 │   ├── App.js/css
 │   ├── index.js/css
 │   └── ...
@@ -99,5 +102,3 @@ Contributions are welcome! Feel free to submit issues and pull requests.
 
 - Inspired by the need to make algorithms more accessible and understandable
 - Built with modern web technologies for optimal performance
-
----

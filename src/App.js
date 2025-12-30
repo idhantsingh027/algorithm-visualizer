@@ -8,11 +8,13 @@ import InsertionSortVisualizer from './components/InsertionSortVisualizer';
 import MergeSortVisualizer from './components/MergeSortVisualizer';
 import QuickSortVisualizer from './components/QuickSortVisualizer';
 import HeapSortVisualizer from './components/HeapSortVisualizer';
+import SinglyLinkedListVisualizer from './components/SinglyLinkedListVisualizer';
 
 function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
 
-  const algorithms = [
+  // Sorting algorithms
+  const sortingAlgorithms = [
     {
       id: 'selection-sort',
       name: 'SELECTION SORT',
@@ -57,6 +59,17 @@ function App() {
     }
   ];
 
+  // Data structures (separate section from sorting)
+  const dataStructureAlgorithms = [
+    {
+      id: 'singly-linked-list',
+      name: 'SINGLY LINKED LIST',
+      code: '00000111',
+      complexity: '—',
+      languages: ['PYTHON', 'C', 'C++']
+    }
+  ];
+
   return (
     <div className="App">
       <Header />
@@ -65,9 +78,21 @@ function App() {
         <main className="main-content">
           <h1 className="main-title">ALGORITHM VISUALIZER</h1>
           
+          <h2 className="section-title">Sorting Algorithms</h2>
           <div className="algorithms-grid">
-            {algorithms.map(algo => (
-              <AlgorithmCard 
+            {sortingAlgorithms.map(algo => (
+              <AlgorithmCard
+                key={algo.id}
+                algorithm={algo}
+                onClick={() => setSelectedAlgorithm(algo.id)}
+              />
+            ))}
+          </div>
+
+          <h2 className="section-title" style={{ marginTop: '48px' }}>Data Structures</h2>
+          <div className="algorithms-grid">
+            {dataStructureAlgorithms.map(algo => (
+              <AlgorithmCard
                 key={algo.id}
                 algorithm={algo}
                 onClick={() => setSelectedAlgorithm(algo.id)}
@@ -89,6 +114,7 @@ function App() {
           {selectedAlgorithm === 'merge-sort' && <MergeSortVisualizer />}
           {selectedAlgorithm === 'quick-sort' && <QuickSortVisualizer />}
           {selectedAlgorithm === 'heap-sort' && <HeapSortVisualizer />}
+          {selectedAlgorithm === 'singly-linked-list' && <SinglyLinkedListVisualizer />}
         </div>
       )}
     </div>

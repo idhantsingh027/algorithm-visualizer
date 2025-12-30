@@ -27,6 +27,14 @@
   margin-top: 40px;
 }
 
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 10px 0 10px 0;
+  color: rgba(255, 255, 255, 0.85);
+}
+
 .visualizer-container {
   max-width: 1600px;
   margin: 0 auto;
