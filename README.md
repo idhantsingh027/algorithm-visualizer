@@ -1,6 +1,6 @@
 # 📊 Algorithm Visualizer
 
-A modern, interactive algorithm visualizer built with React that helps you understand sorting algorithms through step-by-step visual demonstrations and code highlighting.
+A modern, interactive algorithm visualizer built with React that helps you understand sorting algorithms and data structures through step-by-step visual demonstrations and code highlighting.
 
 ## 🚀 Features
 
@@ -11,15 +11,26 @@ A modern, interactive algorithm visualizer built with React that helps you under
 - **Adjustable Speed**: Control animation speed from 100ms to 2000ms
 - **Professional UI**: Modern dark theme with smooth animations and hover effects
 
-## ⚙️ Algorithms
+## ⚙️ Algorithms & Data Structures
 
-### Currently Available:
+### Sorting Algorithms:
 - **Selection Sort** - O(N²) time, O(1) space - Finds minimum element and moves it to sorted position
 - **Bubble Sort** - O(N²) time, O(1) space - Repeatedly swaps adjacent elements if they're in wrong order
 - **Insertion Sort** - O(N²) time, O(1) space - Builds sorted array one element at a time
 - **Merge Sort** - O(N log N) time, O(N) space - Divide and conquer sorting with merging
 - **Quick Sort** - O(N log N) time, O(log N) space - Partitions array around pivot element
 - **Heap Sort** - O(N log N) time, O(1) space - Builds a max-heap and extracts elements to sort
+
+### Data Structures:
+- **Singly Linked List** - Linear data structure with 8 operations:
+  - Insert at Beginning - O(1)
+  - Insert at End - O(1)
+  - Insert at Position - O(n)
+  - Delete from Beginning - O(1)
+  - Delete from End - O(n)
+  - Delete at Position - O(n)
+  - Traverse - O(n)
+  - Search - O(n)
 
 ## 🛠️ Installation
 
@@ -70,6 +81,7 @@ algorithm-visualizer/
 │   │   ├── MergeSortVisualizer.js
 │   │   ├── QuickSortVisualizer.js
 │   │   ├── HeapSortVisualizer.js
+│   │   ├── SinglyLinkedListVisualizer.js
 │   │   └── Visualizer.css
 │   ├── App.js/css
 │   ├── index.js/css
