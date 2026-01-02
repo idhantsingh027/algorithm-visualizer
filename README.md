@@ -94,6 +94,7 @@ algorithm-visualizer/
 │   │   ├── HeapSortVisualizer.js
 │   │   ├── SinglyLinkedListVisualizer.js
 │   │   ├── DoublyLinkedListVisualizer.js
+│   │   ├── CircularLinkedListVisualizer.js
 │   │   └── Visualizer.css
 │   ├── App.js/css
 │   ├── index.js/css
