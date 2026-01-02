@@ -37,6 +37,12 @@ A modern, interactive algorithm visualizer built with React that helps you under
   - Insert/Delete at Position - O(n)
   - Traverse/Search - O(n)
 
+- **Circular Singly Linked List** - Tail points back to head (circular):
+  - Insert at Beginning/End - O(1)
+  - Insert/Delete at Position - O(n)
+  - Delete from End - O(n)
+  - Traverse/Search - O(n)
+
 ## 🛠️ Installation
 
 1. Clone the repository:
