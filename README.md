@@ -102,9 +102,9 @@ algorithm-visualizer/
 - Real-time array visualization with dynamic bar heights
 - Step-by-step code execution highlighting
 - Color-coded element states (comparing, swapping, sorted)
-- Multi-language support (Python, C, C++)
+- Multi-language support
 - Input validation for custom arrays
-- Smooth animations with configurable speed (100-2000ms)
+- Smooth animations with configurable speed
 - Algorithm complexity information
 
 ### Singly Linked List Visualizer Includes:
@@ -115,7 +115,6 @@ algorithm-visualizer/
 - Responsive layout adapting to different list sizes
 - Support for all basic operations with step-by-step execution
 - Color-coded node states (current, previous, new, target)
-- Professional gradient arrows and smooth curved connectors
 
 ### Doubly Linked List Visualizer Includes:
 - Three-column node layout (prev | data | next)
