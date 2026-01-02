@@ -129,6 +129,11 @@ algorithm-visualizer/
 - HEAD and TAIL badges, NULL labeling for ends
 - All core operations with forward traversal and search output
 
+### Circular Singly Linked List Visualizer Includes:
+- Circular tail→head connector
+- HEAD indicator and TAIL badge for tracking boundaries
+- Step-by-step execution with per-language code highlighting
+
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to submit issues and pull requests.
