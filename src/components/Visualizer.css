@@ -862,7 +862,8 @@
 }
 
 .linkedlist-connector-line {
-  stroke-width: 2.5;
+  stroke: rgba(59, 130, 246, 0.9);
+  stroke-width: 2.8;
   stroke-linecap: round;
   stroke-linejoin: round;
   filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));
@@ -874,8 +875,15 @@
   filter: drop-shadow(0 3px 6px rgba(59, 130, 246, 0.5));
 }
 
+/* Distinct style for the circular tail→head loop */
+.linkedlist-connector-line.loop-edge {
+  stroke: rgba(16, 185, 129, 0.95); /* teal */
+  filter: drop-shadow(0 2px 5px rgba(16, 185, 129, 0.45));
+  stroke-width: 3.2;
+}
+
 .linkedlist-arrow-marker {
-  fill: rgba(59, 130, 246, 0.7);
+  fill: rgba(59, 130, 246, 0.95);
   filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));
 }
 
@@ -1129,6 +1137,14 @@
   transform: translateX(-50%);
   display: flex;
   gap: 6px;
+}
+
+.linkedlist-head-arrow {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: rgba(74, 222, 128, 0.95);
+  line-height: 1;
+  margin-left: 4px;
 }
 
 .linkedlist-label-badge {
