@@ -31,6 +31,11 @@ A modern, interactive algorithm visualizer built with React that helps you under
   - Delete at Position - O(n)
   - Traverse - O(n)
   - Search - O(n)
+ 
+- **Doubly Linked List** - Each node points to both previous and next:
+  - Insert at Beginning/End - O(1)
+  - Insert/Delete at Position - O(n)
+  - Traverse/Search - O(n)
 
 ## 🛠️ Installation
 
@@ -82,6 +87,7 @@ algorithm-visualizer/
 │   │   ├── QuickSortVisualizer.js
 │   │   ├── HeapSortVisualizer.js
 │   │   ├── SinglyLinkedListVisualizer.js
+│   │   ├── DoublyLinkedListVisualizer.js
 │   │   └── Visualizer.css
 │   ├── App.js/css
 │   ├── index.js/css
@@ -92,7 +98,7 @@ algorithm-visualizer/
 
 ## 🎯 Features Breakdown
 
-### All Visualizers Include:
+### Sorting Algorithm Visualizers Include:
 - Real-time array visualization with dynamic bar heights
 - Step-by-step code execution highlighting
 - Color-coded element states (comparing, swapping, sorted)
@@ -100,6 +106,22 @@ algorithm-visualizer/
 - Input validation for custom arrays
 - Smooth animations with configurable speed (100-2000ms)
 - Algorithm complexity information
+
+### Singly Linked List Visualizer Includes:
+- Visual node representation with data and next pointer
+- Animated arrows showing node connections
+- HEAD and TAIL labels for tracking list boundaries
+- NULL indicator for end of list
+- Responsive layout adapting to different list sizes
+- Support for all basic operations with step-by-step execution
+- Color-coded node states (current, previous, new, target)
+- Professional gradient arrows and smooth curved connectors
+
+### Doubly Linked List Visualizer Includes:
+- Three-column node layout (prev | data | next)
+- Bidirectional connectors with refined gradients and arrowheads
+- HEAD and TAIL badges, NULL labeling for ends
+- All core operations with forward traversal and search output
 
 ## 🤝 Contributing
 

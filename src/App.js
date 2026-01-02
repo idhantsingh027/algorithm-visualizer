@@ -9,6 +9,7 @@ import MergeSortVisualizer from './components/MergeSortVisualizer';
 import QuickSortVisualizer from './components/QuickSortVisualizer';
 import HeapSortVisualizer from './components/HeapSortVisualizer';
 import SinglyLinkedListVisualizer from './components/SinglyLinkedListVisualizer';
+import DoublyLinkedListVisualizer from './components/DoublyLinkedListVisualizer';
 
 function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
@@ -67,6 +68,13 @@ function App() {
       code: '00000111',
       complexity: '—',
       languages: ['PYTHON', 'C', 'C++']
+    },
+    {
+      id: 'doubly-linked-list',
+      name: 'DOUBLY LINKED LIST',
+      code: '00001000',
+      complexity: '—',
+      languages: ['PYTHON', 'C', 'C++']
     }
   ];
 
@@ -115,6 +123,7 @@ function App() {
           {selectedAlgorithm === 'quick-sort' && <QuickSortVisualizer />}
           {selectedAlgorithm === 'heap-sort' && <HeapSortVisualizer />}
           {selectedAlgorithm === 'singly-linked-list' && <SinglyLinkedListVisualizer />}
+          {selectedAlgorithm === 'doubly-linked-list' && <DoublyLinkedListVisualizer />}
         </div>
       )}
     </div>

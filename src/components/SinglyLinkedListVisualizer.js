@@ -8,7 +8,7 @@ const OPERATIONS = [
   { key: 'delete_begin', label: 'Delete from Beginning' },
   { key: 'delete_end', label: 'Delete from End' },
   { key: 'delete_pos', label: 'Delete at Position' },
-  { key: 'traverse', label: 'Traverse' },
+  { key: 'traverse', label: 'Traverse (forward)' },
   { key: 'search', label: 'Search' }
 ];
 
@@ -337,13 +337,13 @@ function deriveOrder(state) {
 }
 
 function getListLayout(order, listState, canvasWidth) {
-  const nodeWidth = 92;
+  const nodeWidth = 138;
   const nodeDataWidth = nodeWidth / 2;
   const nodeHalf = nodeWidth / 2;
   const marginX = 35;
   const paddingX = nodeHalf + marginX;
-  const paddingY = 90;
-  const nodeGapX = 146;
+  const paddingY = 70;
+  const nodeGapX = 168;
   const rowGapY = 165;
   const maxAllowedPerRow = 8;
 
@@ -385,12 +385,11 @@ function getListLayout(order, listState, canvasWidth) {
         edges.push({ kind: 'node', key: `${fromId}->${toId}`, from: fromAnchor, to: toAnchor, fromNode, toNode });
       }
     } else {
-      // If this node ends a row (and another row follows), keep NULL closer to the node
-      // so the wrap connector has more breathing room.
+      // Place NULL label clearly outside the node card to avoid overlay occlusion.
       const isLastInRow = (i + 1) % maxPerRow === 0 && i < order.length - 1;
-      const nullOffset = isLastInRow ? 44 : 64;
-      const nullX = fromNode.x + nullOffset;
-      const nullY = fromNode.y - 28;
+      const outsideOffset = (nodeHalf + (isLastInRow ? 14 : 28));
+      const nullX = fromNode.x + outsideOffset;
+      const nullY = fromNode.y - 32;
       edges.push({ kind: 'null', key: `${fromId}->null`, from: fromAnchor, to: { x: nullX, y: nullY }, fromNode });
     }
   }
@@ -449,7 +448,8 @@ function SinglyLinkedListVisualizer() {
     () => getListLayout(order, listState, canvasWidth),
     [order, listState, canvasWidth]
   );
-  const codeLines = useMemo(() => codeByOp[operation]?.[language] ?? [], [operation, language]);
+  const codeLanguageKey = language === 'c++' ? 'cpp' : language;
+  const codeLines = useMemo(() => codeByOp[operation]?.[codeLanguageKey] ?? [], [operation, codeLanguageKey]);
 
   const sleep = async () => {
     await new Promise(resolve => setTimeout(resolve, speedRef.current));
@@ -460,18 +460,19 @@ function SinglyLinkedListVisualizer() {
     }
   };
 
-  const togglePause = () => {
-    if (!isRunning) return;
-    if (isPausedRef.current) {
-      isPausedRef.current = false;
-      setIsPaused(false);
-      if (pausedResolve.current) {
-        pausedResolve.current();
-        pausedResolve.current = null;
-      }
-    } else {
-      isPausedRef.current = true;
-      setIsPaused(true);
+  const pauseOperation = () => {
+    if (!isRunning || isPausedRef.current) return;
+    isPausedRef.current = true;
+    setIsPaused(true);
+  };
+
+  const resumeOperation = () => {
+    if (!isRunning || !isPausedRef.current) return;
+    isPausedRef.current = false;
+    setIsPaused(false);
+    if (pausedResolve.current) {
+      pausedResolve.current();
+      pausedResolve.current = null;
     }
   };
 
@@ -561,6 +562,7 @@ function SinglyLinkedListVisualizer() {
     if (isRunning) return;
     resetVisualization();
     setIsRunning(true);
+    setInputError('');
 
     const steps = [];
     let working = cloneListState(listState);
@@ -950,30 +952,21 @@ function SinglyLinkedListVisualizer() {
         <div className="code-section">
           <div className="code-header">
             <div className="language-tabs">
-              <button
-                className={`language-tab ${language === 'python' ? 'active' : ''}`}
-                onClick={() => setLanguage('python')}
-              >
-                Python
-              </button>
-              <button
-                className={`language-tab ${language === 'c' ? 'active' : ''}`}
-                onClick={() => setLanguage('c')}
-              >
-                C
-              </button>
-              <button
-                className={`language-tab ${language === 'cpp' ? 'active' : ''}`}
-                onClick={() => setLanguage('cpp')}
-              >
-                C++
-              </button>
+              {['python', 'c', 'c++'].map(lang => (
+                <button
+                  key={lang}
+                  className={`language-tab ${language === lang ? 'active' : ''}`}
+                  onClick={() => setLanguage(lang)}
+                >
+                  {lang.toUpperCase()}
+                </button>
+              ))}
             </div>
           </div>
           <div className="code-display">
             {codeLines.map(({ line, code }) => (
               <div key={line} className={`code-line ${currentLine === line ? 'highlighted' : ''}`}>
-                <span className="line-number">{line}</span>
+                <span className="line-number">{String(line).padStart(2, '0')}</span>
                 <span className="line-code">{code}</span>
               </div>
             ))}
@@ -1068,9 +1061,8 @@ function SinglyLinkedListVisualizer() {
                 <button onClick={startOperation} disabled={isRunning} className="control-btn primary">
                   Run
                 </button>
-                <button onClick={togglePause} disabled={!isRunning} className="control-btn">
-                  {isPaused ? 'Resume' : 'Pause'}
-                </button>
+                <button onClick={pauseOperation} disabled={!isRunning || isPaused} className="control-btn">Pause</button>
+                <button onClick={resumeOperation} disabled={!isRunning || !isPaused} className="control-btn">Resume</button>
               </div>
             </div>
 
