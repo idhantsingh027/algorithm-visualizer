@@ -1,6 +1,30 @@
-# 📊 Algorithm Visualizer
+<p align="center">
+  <h1 align="center">ALGORITHM VISUALIZER</h1>
+</p>
 
-A modern, interactive algorithm visualizer built with React that helps you understand sorting algorithms and data structures through step-by-step visual demonstrations and code highlighting.
+<p align="center">
+  <em>Transform Learning with Dynamic Algorithm Visuals</em>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/last-commit/idhantsingh027/algorithm-visualizer?style=flat&color=007ec6" alt="Last Commit" />
+  <img src="https://img.shields.io/github/languages/top/idhantsingh027/algorithm-visualizer?style=flat&color=007ec6" alt="Top Language" />
+  <img src="https://img.shields.io/github/languages/count/idhantsingh027/algorithm-visualizer?style=flat&color=5c5c5c" alt="Languages Count" />
+</p>
+
+<p align="center">
+  <em>Built with the tools and technologies:</em>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white" alt="JSON" />
+  <img src="https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white" alt="Markdown" />
+  <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="npm" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+</p>
+
+<br>
 
 ## 🚀 Features
 
@@ -70,12 +94,6 @@ npm start
 3. **Adjust Speed**: Use the slider to control animation speed
 4. **Start Visualization**: Click the "Start" button to begin
 
-## 🏗️ Built With
-
-- **React** - Frontend framework
-- **CSS3** - Styling with modern features
-- **Google Fonts** - Inter & JetBrains Mono
-
 ## 📁 Project Structure
 
 ```
@@ -102,37 +120,6 @@ algorithm-visualizer/
 ├── package.json
 └── README.md
 ```
-
-## 🎯 Features Breakdown
-
-### Sorting Algorithm Visualizers Include:
-- Real-time array visualization with dynamic bar heights
-- Step-by-step code execution highlighting
-- Color-coded element states (comparing, swapping, sorted)
-- Multi-language support
-- Input validation for custom arrays
-- Smooth animations with configurable speed
-- Algorithm complexity information
-
-### Singly Linked List Visualizer Includes:
-- Visual node representation with data and next pointer
-- Animated arrows showing node connections
-- HEAD and TAIL labels for tracking list boundaries
-- NULL indicator for end of list
-- Responsive layout adapting to different list sizes
-- Support for all basic operations with step-by-step execution
-- Color-coded node states (current, previous, new, target)
-
-### Doubly Linked List Visualizer Includes:
-- Three-column node layout (prev | data | next)
-- Bidirectional connectors with refined gradients and arrowheads
-- HEAD and TAIL badges, NULL labeling for ends
-- All core operations with forward traversal and search output
-
-### Circular Singly Linked List Visualizer Includes:
-- Circular tail→head connector
-- HEAD indicator and TAIL badge for tracking boundaries
-- Step-by-step execution with per-language code highlighting
 
 ## 🤝 Contributing
 
