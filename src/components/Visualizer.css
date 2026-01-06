@@ -134,6 +134,9 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .array-container {
@@ -202,6 +205,26 @@
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/*
+  Keep the top control panel fixed to the page width.
+  Allow only the node visualization area to scroll horizontally when the SVG grows.
+*/
+.visualization {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-width: 0;
+}
+
+.visualization > svg {
+  display: block;
 }
 
 .controls-compact {
@@ -1279,6 +1302,10 @@
   stroke-linejoin: round;
   filter: drop-shadow(0 2px 4px rgba(168, 85, 247, 0.25));
   transition: all 0.3s ease;
+}
+
+.doublylist-prev-line.loop-edge {
+  stroke-width: 3.0;
 }
 
 .doublylist-prev-line:hover {

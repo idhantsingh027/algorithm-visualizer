@@ -417,9 +417,10 @@ function getListLayout(order, listState, canvasWidth) {
   const nodeHalf = nodeWidth / 2;
   const marginX = 35;
   const paddingX = nodeHalf + marginX;
+  const paddingRightExtra = 50;
   const paddingY = 70;
   const nodeGapX = 168;
-  const rowGapY = 165;
+  const rowGapY = 125;
   const maxAllowedPerRow = 8;
 
   const safeCanvasWidth = Number.isFinite(canvasWidth) && canvasWidth > 0 ? canvasWidth : 900;
@@ -429,7 +430,7 @@ function getListLayout(order, listState, canvasWidth) {
   );
   const maxPerRow = Math.min(maxAllowedPerRow, maxColsFit);
 
-  const width = safeCanvasWidth;
+  const width = Math.max(safeCanvasWidth, paddingX * 2 + paddingRightExtra);
 
   const rows = Math.max(1, Math.ceil(Math.max(order.length, 1) / maxPerRow));
   const height = paddingY + rows * rowGapY + 10;
@@ -1158,20 +1159,34 @@ function CircularLinkedListVisualizer() {
                 const { from, to, key, fromNode, toNode } = edge;
                 const isLoop = fromNode.id === listState.tailId && toNode.id === listState.headId;
                 if (isLoop) {
-                  const pad = 28;
-                  const localLeft = Math.max(marginX + 8, Math.min(from.x, to.x) - nodeHalf - pad);
-                  const localRight = Math.min(width - marginX - 8, Math.max(from.x, to.x) + nodeHalf + pad);
-                  const spanNodes = nodes.filter(n => n.x >= localLeft && n.x <= localRight);
-                  const spanMaxY = spanNodes.length ? Math.max(...spanNodes.map(n => n.y)) : Math.max(from.y, to.y);
-                  const localBottom = Math.min(height - 30, spanMaxY + nodeHalf + 28);
+                  // Compute global extents for smooth symmetric loop arc
+                  const minX = Math.min(...nodes.map(n => n.x));
+                  const maxX = Math.max(...nodes.map(n => n.x));
+                  const minY = Math.min(...nodes.map(n => n.y));
+                  const maxY = Math.max(...nodes.map(n => n.y));
+                  
+                  const padLeftX = 20;
+                  const padRightX = 65;
+                  const r = 20;
+                  const arcOffset = 5;
+                  
+                  const leftX = minX - nodeHalf - padLeftX;
+                  const rightX = maxX + nodeHalf + padRightX;
+                  const arcY = maxY + nodeHalf + arcOffset;
+                  
                   const pathD = [
                     `M ${from.x} ${from.y}`,
-                    `H ${localRight}`,
-                    `V ${localBottom}`,
-                    `H ${localLeft}`,
-                    `V ${to.y}`,
+                    `H ${rightX - r}`,
+                    `Q ${rightX} ${from.y} ${rightX} ${from.y + r}`,
+                    `V ${arcY - r}`,
+                    `Q ${rightX} ${arcY} ${rightX - r} ${arcY}`,
+                    `H ${leftX + r}`,
+                    `Q ${leftX} ${arcY} ${leftX} ${arcY - r}`,
+                    `V ${to.y + r}`,
+                    `Q ${leftX} ${to.y} ${leftX + r} ${to.y}`,
                     `H ${to.x}`
                   ].join(' ');
+                  
                   return (
                     <path key={key} d={pathD} className="linkedlist-connector-line loop-edge" fill="none" markerEnd="url(#arrowhead)" />
                   );

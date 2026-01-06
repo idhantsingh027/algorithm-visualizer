@@ -11,6 +11,7 @@ import HeapSortVisualizer from './components/HeapSortVisualizer';
 import SinglyLinkedListVisualizer from './components/SinglyLinkedListVisualizer';
 import DoublyLinkedListVisualizer from './components/DoublyLinkedListVisualizer';
 import CircularLinkedListVisualizer from './components/CircularLinkedListVisualizer';
+import CircularDoublyLinkedListVisualizer from './components/CircularDoublyLinkedListVisualizer';
 
 function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
@@ -83,6 +84,13 @@ function App() {
       code: '00001001',
       complexity: '—',
       languages: ['PYTHON', 'C', 'C++']
+    },
+    {
+      id: 'circular-doubly-linked-list',
+      name: 'CIRCULAR DOUBLY LINKED LIST',
+      code: '00001010',
+      complexity: '—',
+      languages: ['PYTHON', 'C', 'C++']
     }
   ];
 
@@ -133,6 +141,7 @@ function App() {
           {selectedAlgorithm === 'singly-linked-list' && <SinglyLinkedListVisualizer />}
           {selectedAlgorithm === 'doubly-linked-list' && <DoublyLinkedListVisualizer />}
           {selectedAlgorithm === 'circular-singly-linked-list' && <CircularLinkedListVisualizer />}
+          {selectedAlgorithm === 'circular-doubly-linked-list' && <CircularDoublyLinkedListVisualizer />}
         </div>
       )}
     </div>
