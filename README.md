@@ -67,6 +67,12 @@
   - Delete from End - O(n)
   - Traverse/Search - O(n)
 
+- **Circular Doubly Linked List** - Circular with bidirectional pointers:
+  - Insert at Beginning/End - O(1)
+  - Insert/Delete at Position - O(n)
+  - Traverse Forward/Backward - O(n)
+  - Search - O(n)
+
 ## 🛠️ Installation
 
 1. Clone the repository:
@@ -113,6 +119,7 @@ algorithm-visualizer/
 │   │   ├── SinglyLinkedListVisualizer.js
 │   │   ├── DoublyLinkedListVisualizer.js
 │   │   ├── CircularLinkedListVisualizer.js
+│   │   ├── CircularDoublyLinkedListVisualizer.js
 │   │   └── Visualizer.css
 │   ├── App.js/css
 │   ├── index.js/css
