@@ -61,7 +61,7 @@
   - Insert/Delete at Position - O(n)
   - Traverse/Search - O(n)
 
-- **Circular Singly Linked List** - Tail points back to head (circular):
+- **Circular Singly Linked List** - Tail points back to head:
   - Insert at Beginning/End - O(1)
   - Insert/Delete at Position - O(n)
   - Delete from End - O(n)
