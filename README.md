@@ -8,7 +8,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/github/last-commit/idhantsingh027/algorithm-visualizer?style=flat&color=007ec6" alt="Last Commit" />
-  <img src="https://img.shields.io/github/languages/top/idhantsingh027/algorithm-visualizer?style=flat&color=007ec6" alt="Top Language" />
+  <img src="https://img.shields.io/github/languages/top/idhantsingh027/algorithm-visualizer?style=flat&color=007ec6&cache=none" alt="Top Language" />
   <img src="https://img.shields.io/github/languages/count/idhantsingh027/algorithm-visualizer?style=flat&color=5c5c5c" alt="Languages Count" />
 </p>
 
