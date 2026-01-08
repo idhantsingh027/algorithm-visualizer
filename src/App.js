@@ -12,6 +12,7 @@ import SinglyLinkedListVisualizer from './components/SinglyLinkedListVisualizer'
 import DoublyLinkedListVisualizer from './components/DoublyLinkedListVisualizer';
 import CircularLinkedListVisualizer from './components/CircularLinkedListVisualizer';
 import CircularDoublyLinkedListVisualizer from './components/CircularDoublyLinkedListVisualizer';
+import StackInfixToPostfixVisualizer from './components/StackInfixToPostfixVisualizer';
 
 function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
@@ -91,6 +92,13 @@ function App() {
       code: '00001010',
       complexity: '—',
       languages: ['PYTHON', 'C', 'C++']
+    },
+    {
+      id: 'stack-infix-to-postfix',
+      name: 'INFIX TO POSTFIX - STACK',
+      code: '00001011',
+      complexity: '—',
+      languages: ['PYTHON', 'C', 'C++']
     }
   ];
 
@@ -142,6 +150,7 @@ function App() {
           {selectedAlgorithm === 'doubly-linked-list' && <DoublyLinkedListVisualizer />}
           {selectedAlgorithm === 'circular-singly-linked-list' && <CircularLinkedListVisualizer />}
           {selectedAlgorithm === 'circular-doubly-linked-list' && <CircularDoublyLinkedListVisualizer />}
+          {selectedAlgorithm === 'stack-infix-to-postfix' && <StackInfixToPostfixVisualizer />}
         </div>
       )}
     </div>

@@ -1327,9 +1327,11 @@ function DoublyLinkedListVisualizer() {
               </defs>
               {edges.map(edge => {
                 const { from, to, key, kind } = edge;
+                const sep = 14;
                 if (kind === 'null') {
-                  const c1x = from.x + 18; const c1y = from.y - 22; const c2x = to.x - 10; const c2y = to.y;
-                  const pathD = `M ${from.x} ${from.y} C ${c1x} ${c1y} ${c2x} ${c2y} ${to.x} ${to.y}`;
+                  const yFrom = from.y + sep;
+                  const c1x = from.x + 18; const c1y = yFrom - 22; const c2x = to.x - 10; const c2y = to.y;
+                  const pathD = `M ${from.x} ${yFrom} C ${c1x} ${c1y} ${c2x} ${c2y} ${to.x} ${to.y}`;
                   return (
                     <g key={key}>
                       <path d={pathD} className="linkedlist-connector-line" fill="none" stroke="url(#ll-line-grad)" markerEnd="url(#arrowhead)" />
@@ -1338,12 +1340,16 @@ function DoublyLinkedListVisualizer() {
                   );
                 }
                 if (kind === 'prev') {
+                  const yFrom = from.y - sep;
+                  const yTo = to.y - sep;
                   const dx = Math.max(18, Math.min(36, Math.abs(to.x - from.x) / 4));
-                  const pathD = `M ${from.x} ${from.y} C ${from.x - dx} ${from.y} ${to.x + dx} ${to.y} ${to.x} ${to.y}`;
+                  const pathD = `M ${from.x} ${yFrom} C ${from.x - dx} ${yFrom} ${to.x + dx} ${yTo} ${to.x} ${yTo}`;
                   return (<path key={key} d={pathD} className="doublylist-prev-line" fill="none" stroke="url(#ll-line-grad)" markerEnd="url(#arrowhead)" />);
                 }
+                const yFrom = from.y + sep;
+                const yTo = to.y + sep;
                 const dx = Math.max(24, Math.min(52, Math.abs(to.x - from.x) / 3));
-                const pathD = `M ${from.x} ${from.y} C ${from.x + dx} ${from.y} ${to.x - dx} ${to.y} ${to.x} ${to.y}`;
+                const pathD = `M ${from.x} ${yFrom} C ${from.x + dx} ${yFrom} ${to.x - dx} ${yTo} ${to.x} ${yTo}`;
                 return (<path key={key} d={pathD} className="linkedlist-connector-line" fill="none" stroke="url(#ll-line-grad)" markerEnd="url(#arrowhead)" />);
               })}
             </svg>
