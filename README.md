@@ -71,6 +71,13 @@
   - Insert/Delete at Position - O(n)
   - Traverse Forward/Backward - O(n)
   - Search - O(n)
+ 
+- **Stack - Infix to Postfix Conversion** - Expression evaluation using stack:
+  - Converts infix expressions to postfix notation
+  - Handles operator precedence and associativity
+  - Supports parentheses for grouping
+  - Step-by-step visualization with stack operations
+  - Time Complexity: O(n), Space Complexity: O(n)
 
 ## 🛠️ Installation
 
@@ -119,6 +126,7 @@ algorithm-visualizer/
 │   │   ├── DoublyLinkedListVisualizer.js
 │   │   ├── CircularLinkedListVisualizer.js
 │   │   ├── CircularDoublyLinkedListVisualizer.js
+│   │   ├── StackInfixToPostfixVisualizer.js
 │   │   └── Visualizer.css
 │   ├── App.js/css
 │   ├── index.js/css
