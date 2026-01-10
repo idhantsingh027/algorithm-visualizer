@@ -87,7 +87,7 @@ function validateParentheses(tokenObjs) {
 
 const codeByLang = {
   python: [
-    { line: 1, code: 'def infix_to_postfix(s):' },
+    { line: 1, code: 'def infix_to_prefix(s):' },
     { line: 2, code: '    def prec(op):' },
     { line: 3, code: '        if op == "^":' },
     { line: 4, code: '            return 3' },
@@ -100,102 +100,107 @@ const codeByLang = {
     { line: 11, code: '        return op == "^"' },
     { line: 12, code: '    out = []' },
     { line: 13, code: '    st = []' },
-    { line: 14, code: '    for tok in tokenize(s):' },
+    { line: 14, code: '    for tok in reversed(tokenize(s)):' },
     { line: 15, code: '        if is_operand(tok):' },
     { line: 16, code: '            out.append(tok)' },
-    { line: 17, code: '        elif tok == "(":' },
+    { line: 17, code: '        elif tok == ")":' },
     { line: 18, code: '            st.append(tok)' },
-    { line: 19, code: '        elif tok == ")":' },
-    { line: 20, code: '            while st and st[-1] != "(":' },
+    { line: 19, code: '        elif tok == "(":' },
+    { line: 20, code: '            while st and st[-1] != ")":' },
     { line: 21, code: '                out.append(st.pop())' },
     { line: 22, code: '            st.pop()' },
     { line: 23, code: '        else:' },
-    { line: 24, code: '            while st and st[-1] != "(":' },
+    { line: 24, code: '            while st and st[-1] != ")":' },
     { line: 25, code: '                top = st[-1]' },
     { line: 26, code: '                if prec(top) > prec(tok):' },
     { line: 27, code: '                    out.append(st.pop())' },
-    { line: 28, code: '                elif prec(top) == prec(tok) and not right_assoc(tok):' },
+    { line: 28, code: '                elif prec(top) == prec(tok) and right_assoc(tok):' },
     { line: 29, code: '                    out.append(st.pop())' },
     { line: 30, code: '                else:' },
     { line: 31, code: '                    break' },
     { line: 32, code: '            st.append(tok)' },
     { line: 33, code: '    while st:' },
     { line: 34, code: '        out.append(st.pop())' },
-    { line: 35, code: '    return " ".join(out)' }
+    { line: 35, code: '    out.reverse()' },
+    { line: 36, code: '    return " ".join(out)' }
   ],
   c: [
-    { line: 1, code: 'void infixToPostfix(const char* s, char* out)' },
+    { line: 1, code: 'void infixToPrefix(const char* s, char* out)' },
     { line: 2, code: '{' },
     { line: 3, code: '    char st[1024];' },
     { line: 4, code: '    int top = -1;' },
-    { line: 5, code: '    int outLen = 0;' },
-    { line: 6, code: '    Token tok;' },
-    { line: 7, code: '    while (nextToken(&tok, s))' },
-    { line: 8, code: '    {' },
-    { line: 9, code: '        if (isOperand(tok))' },
-    { line: 10, code: '        {' },
-    { line: 11, code: '            appendToken(out, &outLen, tok);' },
-    { line: 12, code: '        }' },
-    { line: 13, code: "        else if (tok.ch == '(')" },
-    { line: 14, code: '        {' },
-    { line: 15, code: '            st[++top] = tok.ch;' },
-    { line: 16, code: '        }' },
-    { line: 17, code: "        else if (tok.ch == ')')" },
-    { line: 18, code: '        {' },
-    { line: 19, code: "            while (top >= 0 && st[top] != '(')" },
-    { line: 20, code: '            {' },
-    { line: 21, code: '                popToOutput(st, &top, out, &outLen);' },
-    { line: 22, code: '            }' },
-    { line: 23, code: '            top--;' },
-    { line: 24, code: '        }' },
-    { line: 25, code: '        else' },
-    { line: 26, code: '        {' },
-    { line: 27, code: "            while (top >= 0 && st[top] != '(')" },
-    { line: 28, code: '            {' },
-    { line: 29, code: '                char opTop = st[top];' },
-    { line: 30, code: '                if (prec(opTop) > prec(tok.ch))' },
-    { line: 31, code: '                {' },
-    { line: 32, code: '                    popToOutput(st, &top, out, &outLen);' },
-    { line: 33, code: '                }' },
-    { line: 34, code: '                else if (prec(opTop) == prec(tok.ch) && !rightAssoc(tok.ch))' },
-    { line: 35, code: '                {' },
-    { line: 36, code: '                    popToOutput(st, &top, out, &outLen);' },
-    { line: 37, code: '                }' },
-    { line: 38, code: '                else' },
-    { line: 39, code: '                {' },
-    { line: 40, code: '                    break;' },
-    { line: 41, code: '                }' },
-    { line: 42, code: '            }' },
-    { line: 43, code: '            st[++top] = tok.ch;' },
-    { line: 44, code: '        }' },
-    { line: 45, code: '    }' },
-    { line: 46, code: '    while (top >= 0)' },
-    { line: 47, code: '    {' },
-    { line: 48, code: '        popToOutput(st, &top, out, &outLen);' },
-    { line: 49, code: '    }' },
-    { line: 50, code: '    out[outLen] = "\\0";' },
-    { line: 51, code: '}' }
+    { line: 5, code: '    Token toks[1024];' },
+    { line: 6, code: '    int n = tokenize(s, toks);' },
+    { line: 7, code: '    Token res[1024];' },
+    { line: 8, code: '    int resLen = 0;' },
+    { line: 9, code: '    for (int i = n - 1; i >= 0; --i)' },
+    { line: 10, code: '    {' },
+    { line: 11, code: '        Token tok = toks[i];' },
+    { line: 12, code: '        if (isOperand(tok))' },
+    { line: 13, code: '        {' },
+    { line: 14, code: '            res[resLen++] = tok;' },
+    { line: 15, code: '        }' },
+    { line: 16, code: "        else if (tok.ch == ')')" },
+    { line: 17, code: '        {' },
+    { line: 18, code: '            st[++top] = tok.ch;' },
+    { line: 19, code: '        }' },
+    { line: 20, code: "        else if (tok.ch == '(')" },
+    { line: 21, code: '        {' },
+    { line: 22, code: "            while (top >= 0 && st[top] != ')')" },
+    { line: 23, code: '            {' },
+    { line: 24, code: '                popToRes(st, &top, res, &resLen);' },
+    { line: 25, code: '            }' },
+    { line: 26, code: '            top--;' },
+    { line: 27, code: '        }' },
+    { line: 28, code: '        else' },
+    { line: 29, code: '        {' },
+    { line: 30, code: "            while (top >= 0 && st[top] != ')')" },
+    { line: 31, code: '            {' },
+    { line: 32, code: '                char opTop = st[top];' },
+    { line: 33, code: '                if (prec(opTop) > prec(tok.ch))' },
+    { line: 34, code: '                {' },
+    { line: 35, code: '                    popToRes(st, &top, res, &resLen);' },
+    { line: 36, code: '                }' },
+    { line: 37, code: '                else if (prec(opTop) == prec(tok.ch) && rightAssoc(tok.ch))' },
+    { line: 38, code: '                {' },
+    { line: 39, code: '                    popToRes(st, &top, res, &resLen);' },
+    { line: 40, code: '                }' },
+    { line: 41, code: '                else' },
+    { line: 42, code: '                {' },
+    { line: 43, code: '                    break;' },
+    { line: 44, code: '                }' },
+    { line: 45, code: '            }' },
+    { line: 46, code: '            st[++top] = tok.ch;' },
+    { line: 47, code: '        }' },
+    { line: 48, code: '    }' },
+    { line: 49, code: '    while (top >= 0)' },
+    { line: 50, code: '    {' },
+    { line: 51, code: '        popToRes(st, &top, res, &resLen);' },
+    { line: 52, code: '    }' },
+    { line: 53, code: '    reverseTokens(res, resLen);' },
+    { line: 54, code: '    joinTokens(out, res, resLen);' },
+    { line: 55, code: '}' }
   ],
   cpp: [
-    { line: 1, code: 'std::string infixToPostfix(const std::string& s)' },
+    { line: 1, code: 'std::string infixToPrefix(const std::string& s)' },
     { line: 2, code: '{' },
     { line: 3, code: '    auto toks = tokenize(s);' },
     { line: 4, code: '    std::vector<std::string> out;' },
     { line: 5, code: '    std::vector<std::string> st;' },
-    { line: 6, code: '    for (int i = 0; i < (int)toks.size(); ++i)' },
+    { line: 6, code: '    for (int i = (int)toks.size() - 1; i >= 0; --i)' },
     { line: 7, code: '    {' },
     { line: 8, code: '        auto tok = toks[i];' },
     { line: 9, code: '        if (isOperand(tok))' },
     { line: 10, code: '        {' },
     { line: 11, code: '            out.push_back(tok);' },
     { line: 12, code: '        }' },
-    { line: 13, code: '        else if (tok == "(")' },
+    { line: 13, code: '        else if (tok == ")")' },
     { line: 14, code: '        {' },
     { line: 15, code: '            st.push_back(tok);' },
     { line: 16, code: '        }' },
-    { line: 17, code: '        else if (tok == ")")' },
+    { line: 17, code: '        else if (tok == "(")' },
     { line: 18, code: '        {' },
-    { line: 19, code: '            while (!st.empty() && st.back() != "(")' },
+    { line: 19, code: '            while (!st.empty() && st.back() != ")")' },
     { line: 20, code: '            {' },
     { line: 21, code: '                out.push_back(st.back());' },
     { line: 22, code: '                st.pop_back();' },
@@ -204,7 +209,7 @@ const codeByLang = {
     { line: 25, code: '        }' },
     { line: 26, code: '        else' },
     { line: 27, code: '        {' },
-    { line: 28, code: '            while (!st.empty() && st.back() != "(")' },
+    { line: 28, code: '            while (!st.empty() && st.back() != ")")' },
     { line: 29, code: '            {' },
     { line: 30, code: '                auto top = st.back();' },
     { line: 31, code: '                if (prec(top) > prec(tok))' },
@@ -212,7 +217,7 @@ const codeByLang = {
     { line: 33, code: '                    out.push_back(top);' },
     { line: 34, code: '                    st.pop_back();' },
     { line: 35, code: '                }' },
-    { line: 36, code: '                else if (prec(top) == prec(tok) && !rightAssoc(tok))' },
+    { line: 36, code: '                else if (prec(top) == prec(tok) && rightAssoc(tok))' },
     { line: 37, code: '                {' },
     { line: 38, code: '                    out.push_back(top);' },
     { line: 39, code: '                    st.pop_back();' },
@@ -230,8 +235,9 @@ const codeByLang = {
     { line: 51, code: '        out.push_back(st.back());' },
     { line: 52, code: '        st.pop_back();' },
     { line: 53, code: '    }' },
-    { line: 54, code: '    return joinWithSpaces(out);' },
-    { line: 55, code: '}' }
+    { line: 54, code: '    std::reverse(out.begin(), out.end());' },
+    { line: 55, code: '    return joinWithSpaces(out);' },
+    { line: 56, code: '}' }
   ]
 };
 
@@ -242,49 +248,52 @@ const lineMap = {
     forTok: 14,
     operand: 15,
     outAppend: 16,
-    lparen: 17,
+    rparen: 17,
     stPush: 18,
-    rparen: 19,
+    lparen: 19,
     popUntil: 20,
     popOne: 21,
-    popLParen: 22,
+    popRParen: 22,
     opElse: 23,
     opWhile: 24,
     readTop: 25,
     higher: 26,
     popHigher: 27,
-    equalLeft: 28,
+    equalRight: 28,
     popEqual: 29,
     break: 31,
     pushOp: 32,
     drain: 33,
     drainPop: 34,
-    ret: 35
+    reverse: 35,
+    ret: 36
   },
   c: {
     initSt: 3,
-    initOut: 5,
-    forTok: 7,
-    operand: 9,
-    outAppend: 11,
-    lparen: 13,
-    stPush: 15,
-    rparen: 17,
-    popUntil: 19,
-    popOne: 21,
-    popLParen: 23,
-    opElse: 25,
-    opWhile: 27,
-    readTop: 29,
-    higher: 30,
-    popHigher: 32,
-    equalLeft: 34,
-    popEqual: 36,
-    break: 40,
-    pushOp: 43,
-    drain: 46,
-    drainPop: 48,
-    ret: 50
+    initTok: 6,
+    initOut: 8,
+    forTok: 11,
+    operand: 12,
+    outAppend: 14,
+    rparen: 16,
+    stPush: 18,
+    lparen: 20,
+    popUntil: 22,
+    popOne: 24,
+    popRParen: 26,
+    opElse: 28,
+    opWhile: 30,
+    readTop: 32,
+    higher: 33,
+    popHigher: 35,
+    equalRight: 37,
+    popEqual: 39,
+    break: 43,
+    pushOp: 46,
+    drain: 49,
+    drainPop: 51,
+    reverse: 53,
+    ret: 54
   },
   cpp: {
     initTok: 3,
@@ -293,28 +302,29 @@ const lineMap = {
     forTok: 8,
     operand: 9,
     outAppend: 11,
-    lparen: 13,
+    rparen: 13,
     stPush: 15,
-    rparen: 17,
+    lparen: 17,
     popUntil: 19,
     popOne: 21,
-    popLParen: 24,
+    popRParen: 24,
     opElse: 26,
     opWhile: 28,
     readTop: 30,
     higher: 31,
     popHigher: 33,
-    equalLeft: 36,
+    equalRight: 36,
     popEqual: 38,
     break: 43,
     pushOp: 46,
     drain: 49,
     drainPop: 51,
-    ret: 54
+    reverse: 54,
+    ret: 55
   }
 };
 
-function StackInfixToPostfixVisualizer() {
+function StackInfixToPrefixVisualizer() {
   const [language, setLanguage] = useState('python');
   const [expr, setExpr] = useState('a+b*(c^d-e)');
   const [inputError, setInputError] = useState('');
@@ -401,10 +411,10 @@ function StackInfixToPostfixVisualizer() {
     pushStep('initOut', -1, 'Initialize output list');
     pushStep('initSt', -1, 'Initialize operator stack');
 
-    for (let idx = 0; idx < tokenObjs.length; idx += 1) {
+    for (let idx = tokenObjs.length - 1; idx >= 0; idx -= 1) {
       const tok = tokenObjs[idx].token;
 
-      pushStep('forTok', idx, `Read token '${tok}'`);
+      pushStep('forTok', idx, `Read token '${tok}' (right-to-left)`);
 
       if (isOperand(tok)) {
         pushStep('operand', idx, `Operand '${tok}' → append to output`);
@@ -413,16 +423,16 @@ function StackInfixToPostfixVisualizer() {
         continue;
       }
 
-      if (tok === '(') {
-        pushStep('lparen', idx, "'(' → push to stack");
+      if (tok === ')') {
+        pushStep('rparen', idx, "')' → push to stack");
         st.push(tok);
-        pushStep('stPush', idx, "Stack push '('");
+        pushStep('stPush', idx, "Stack push ')'");
         continue;
       }
 
-      if (tok === ')') {
-        pushStep('rparen', idx, "')' → pop until '('");
-        while (st.length > 0 && st[st.length - 1] !== '(') {
+      if (tok === '(') {
+        pushStep('lparen', idx, "'(' → pop until ')'");
+        while (st.length > 0 && st[st.length - 1] !== ')') {
           pushStep('popUntil', idx, `Top '${st[st.length - 1]}' → pop to output`);
           const popped = st.pop();
           output.push(popped);
@@ -430,18 +440,18 @@ function StackInfixToPostfixVisualizer() {
         }
 
         if (st.length === 0) {
-          pushStep('popLParen', idx, "Error: missing '('.", true);
-          return { ok: false, error: "Mismatched parentheses: missing '('.", steps };
+          pushStep('popRParen', idx, "Error: missing ')'.", true);
+          return { ok: false, error: "Mismatched parentheses: missing ')'.", steps };
         }
 
         st.pop();
-        pushStep('popLParen', idx, "Pop matching '('");
+        pushStep('popRParen', idx, "Pop matching ')'");
         continue;
       }
 
       if (OPERATORS.has(tok)) {
         pushStep('opElse', idx, `Operator '${tok}'`);
-        while (st.length > 0 && st[st.length - 1] !== '(') {
+        while (st.length > 0 && st[st.length - 1] !== ')') {
           pushStep('opWhile', idx, `Compare with stack top '${st[st.length - 1]}'`);
           const top = st[st.length - 1];
           pushStep('readTop', idx, `top = '${top}'`);
@@ -457,8 +467,8 @@ function StackInfixToPostfixVisualizer() {
             continue;
           }
 
-          if (pTop === pTok && !isRightAssociative(tok)) {
-            pushStep('equalLeft', idx, `${tok} is left-associative and equal precedence → pop`);
+          if (pTop === pTok && isRightAssociative(tok)) {
+            pushStep('equalRight', idx, `${tok} is right-associative and equal precedence → pop`);
             const popped = st.pop();
             output.push(popped);
             pushStep('popEqual', idx, `Output += '${popped}'`);
@@ -474,23 +484,24 @@ function StackInfixToPostfixVisualizer() {
         continue;
       }
 
-      pushStep('break', idx, `Error: unknown token '${tok}'`);
+      pushStep('break', idx, `Error: unknown token '${tok}'`, true);
       return { ok: false, error: `Unknown token: '${tok}'`, steps };
     }
 
-    pushStep('drain', tokenObjs.length, 'End of input → pop remaining operators');
+    pushStep('drain', -1, 'End of input → pop remaining operators');
     while (st.length > 0) {
       const top = st[st.length - 1];
-      if (top === '(') {
-        pushStep('drainPop', tokenObjs.length, "Error: mismatched parentheses: extra '('.", true);
-        return { ok: false, error: "Mismatched parentheses: extra '('.", steps };
+      if (top === ')') {
+        pushStep('drainPop', -1, "Error: mismatched parentheses: extra ')'.", true);
+        return { ok: false, error: "Mismatched parentheses: extra ')'.", steps };
       }
       const popped = st.pop();
       output.push(popped);
-      pushStep('drainPop', tokenObjs.length, `Output += '${popped}'`);
+      pushStep('drainPop', -1, `Output += '${popped}'`);
     }
 
-    pushStep('ret', tokenObjs.length, `Done → postfix = '${output.join(' ')}'`);
+    pushStep('reverse', -1, 'Reverse output to obtain prefix expression');
+    pushStep('ret', -1, `Done → prefix = '${[...output].reverse().join(' ')}'`);
     return { ok: true, error: '', steps };
   };
 
@@ -557,13 +568,13 @@ function StackInfixToPostfixVisualizer() {
     }
   };
 
-  const postfix = useMemo(() => out.join(' '), [out]);
+  const prefix = useMemo(() => [...out].reverse().join(' '), [out]);
 
   return (
     <div className="visualizer">
       <div className="visualizer-header">
-        <h1 className="visualizer-title">Infix to Postfix - STACK</h1>
-        <p className="algorithm-description">Convert infix expression to postfix using operator stack, precedence, and associativity.</p>
+        <h1 className="visualizer-title">Infix to Prefix - STACK</h1>
+        <p className="algorithm-description">Convert infix expression to prefix using right-to-left scan, operator stack, precedence, and associativity.</p>
         <div className="complexity-info">
           <div className="complexity-badge">Time: O(n)</div>
           <div className="complexity-badge">Space: O(n)</div>
@@ -659,8 +670,8 @@ function StackInfixToPostfixVisualizer() {
                 </div>
               </div>
               <div className="stackviz-row">
-                <div className="stackviz-label">Postfix</div>
-                <div className="stackviz-value stackviz-postfix">{postfix || '—'}</div>
+                <div className="stackviz-label">Prefix</div>
+                <div className="stackviz-value stackviz-postfix">{prefix || '—'}</div>
               </div>
             </div>
           </div>
@@ -705,4 +716,4 @@ function StackInfixToPostfixVisualizer() {
   );
 }
 
-export default StackInfixToPostfixVisualizer;
+export default StackInfixToPrefixVisualizer;
