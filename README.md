@@ -72,7 +72,7 @@
   - Traverse Forward/Backward - O(n)
   - Search - O(n)
  
-- **Stack - Infix to Postfix Conversion** - Expression evaluation using stack:
+- **Stack - Infix to Postfix Conversion and Infix to Prefix Conversion** - Expression evaluation using stack:
   - Converts infix expressions to postfix notation
   - Handles operator precedence and associativity
   - Supports parentheses for grouping
