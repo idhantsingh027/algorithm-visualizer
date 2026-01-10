@@ -127,6 +127,7 @@ algorithm-visualizer/
 │   │   ├── CircularLinkedListVisualizer.js
 │   │   ├── CircularDoublyLinkedListVisualizer.js
 │   │   ├── StackInfixToPostfixVisualizer.js
+│   │   ├── StackInfixToPrefixVisualizer.js
 │   │   └── Visualizer.css
 │   ├── App.js/css
 │   ├── index.js/css
