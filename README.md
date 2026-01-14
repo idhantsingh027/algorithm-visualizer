@@ -78,6 +78,12 @@
   - Supports parentheses for grouping
   - Step-by-step visualization with stack operations
   - Time Complexity: O(n), Space Complexity: O(n)
+ 
+- **Breadth First Search (BFS)** - Graph traversal using a queue:
+  - Accepts user input as an adjacency list
+  - Visualizes BFS layers (level-order traversal)
+  - Step-by-step traversal with queue and visited states
+  - Time Complexity: O(V + E), Space Complexity: O(V)
 
 ## 🛠️ Installation
 
