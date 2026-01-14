@@ -14,6 +14,7 @@ import CircularLinkedListVisualizer from './components/CircularLinkedListVisuali
 import CircularDoublyLinkedListVisualizer from './components/CircularDoublyLinkedListVisualizer';
 import StackInfixToPostfixVisualizer from './components/StackInfixToPostfixVisualizer';
 import StackInfixToPrefixVisualizer from './components/StackInfixToPrefixVisualizer';
+import BreadthFirstSearchVisualizer from './components/BreadthFirstSearchVisualizer';
 
 function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
@@ -107,6 +108,13 @@ function App() {
       code: '00001100',
       complexity: '—',
       languages: ['PYTHON', 'C', 'C++']
+    },
+    {
+      id: 'bfs',
+      name: 'BREADTH FIRST SEARCH (BFS)',
+      code: '00001101',
+      complexity: 'O(V+E)',
+      languages: ['PYTHON', 'C', 'C++']
     }
   ];
 
@@ -160,6 +168,7 @@ function App() {
           {selectedAlgorithm === 'circular-doubly-linked-list' && <CircularDoublyLinkedListVisualizer />}
           {selectedAlgorithm === 'stack-infix-to-postfix' && <StackInfixToPostfixVisualizer />}
           {selectedAlgorithm === 'stack-infix-to-prefix' && <StackInfixToPrefixVisualizer />}
+          {selectedAlgorithm === 'bfs' && <BreadthFirstSearchVisualizer />}
         </div>
       )}
     </div>

@@ -217,6 +217,7 @@
   border: 1px solid rgba(255, 255, 255, 0.06);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.85rem;
+  line-height: 1.45;
 }
 
 .stackviz-summary {
@@ -261,6 +262,173 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.85);
+}
+
+/* BFS visualizer */
+.bfs-graph .tree-container {
+  width: min(980px, 100%);
+  min-width: 760px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+.bfs-graph .tree-level {
+  display: none;
+}
+
+.bfs-graph .tree-node-wrapper::before,
+.bfs-graph .node-connector {
+  display: none !important;
+}
+
+.bfs-graph .bfs-connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.bfs-graph .bfs-layer-rect {
+  fill: rgba(255, 255, 255, 0.015);
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 2;
+  stroke-dasharray: 6 6;
+}
+
+.bfs-graph .bfs-layer-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  fill: rgba(255, 255, 255, 0.65);
+}
+
+.bfs-graph .bfs-edge {
+  stroke: rgba(255, 255, 255, 0.25);
+  stroke-width: 2;
+}
+
+.bfs-graph .bfs-edge.active {
+  stroke: rgba(59, 130, 246, 0.9);
+  stroke-width: 3;
+}
+
+.bfs-graph .bfs-node {
+  position: absolute;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.bfs-graph .tree-node {
+  min-width: 62px;
+  padding: 10px 14px;
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.bfs-graph .tree-node.unvisited {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.bfs-graph .tree-node.discovered {
+  border-color: rgba(59, 130, 246, 0.75);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.16) 0%, rgba(59, 130, 246, 0.06) 100%);
+}
+
+.bfs-graph .tree-node.current {
+  border-color: rgba(245, 158, 11, 0.95);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(245, 158, 11, 0.06) 100%);
+  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.25);
+}
+
+.bfs-graph .tree-node.visited {
+  border-color: rgba(74, 222, 128, 0.8);
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.18) 0%, rgba(74, 222, 128, 0.05) 100%);
+}
+
+.bfs-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.bfs-summary-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.bfs-summary-label {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.bfs-summary-value {
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bfs-output {
+  white-space: pre-wrap;
+}
+
+.bfs-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.bfs-chip.front {
+  background: rgba(59, 130, 246, 0.14);
+  border-color: rgba(59, 130, 246, 0.35);
+}
+
+.bfs-textarea {
+  min-height: 140px;
+  resize: vertical;
+  white-space: pre;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.bfs-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bfs-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.bfs-log {
+  min-height: 320px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: auto;
+}
+
+.bfs-log .stackviz-log-line {
+  margin-bottom: 10px;
+}
+
+.bfs-log .stackviz-log-line:last-child {
+  margin-bottom: 0;
 }
 
 .stackviz-token.active {
