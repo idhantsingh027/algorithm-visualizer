@@ -15,6 +15,7 @@ import CircularDoublyLinkedListVisualizer from './components/CircularDoublyLinke
 import StackInfixToPostfixVisualizer from './components/StackInfixToPostfixVisualizer';
 import StackInfixToPrefixVisualizer from './components/StackInfixToPrefixVisualizer';
 import BreadthFirstSearchVisualizer from './components/BreadthFirstSearchVisualizer';
+import DepthFirstSearchVisualizer from './components/DepthFirstSearchVisualizer';
 
 function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
@@ -115,6 +116,13 @@ function App() {
       code: '00001101',
       complexity: 'O(V+E)',
       languages: ['PYTHON', 'C', 'C++']
+    },
+    {
+      id: 'dfs',
+      name: 'DEPTH FIRST SEARCH (DFS)',
+      code: '00001110',
+      complexity: 'O(V+E)',
+      languages: ['PYTHON', 'C', 'C++']
     }
   ];
 
@@ -169,6 +177,7 @@ function App() {
           {selectedAlgorithm === 'stack-infix-to-postfix' && <StackInfixToPostfixVisualizer />}
           {selectedAlgorithm === 'stack-infix-to-prefix' && <StackInfixToPrefixVisualizer />}
           {selectedAlgorithm === 'bfs' && <BreadthFirstSearchVisualizer />}
+          {selectedAlgorithm === 'dfs' && <DepthFirstSearchVisualizer />}
         </div>
       )}
     </div>
