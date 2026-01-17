@@ -141,6 +141,7 @@ algorithm-visualizer/
 │   │   ├── StackInfixToPostfixVisualizer.js
 │   │   ├── StackInfixToPrefixVisualizer.js
 │   │   ├── BreadthFirstSearchVisualizer.js
+│   │   ├── DepthFirstSearchVisualizer.js
 │   │   └── Visualizer.css
 │   ├── App.js/css
 │   ├── index.js/css
