@@ -85,6 +85,12 @@
   - Step-by-step traversal with queue and visited states
   - Time Complexity: O(V + E), Space Complexity: O(V)
 
+- **Depth First Search (DFS)** - Graph traversal using a stack:
+  - Accepts user input as an adjacency list
+  - Visualizes the DFS tree grouped by depth (depth ≠ BFS layers)
+  - Step-by-step traversal with stack and visited states
+  - Time Complexity: O(V + E), Space Complexity: O(V)
+
 ## 🛠️ Installation
 
 1. Clone the repository:
